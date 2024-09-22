@@ -29,8 +29,8 @@ class HomeFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.response.observe(viewLifecycleOwner) {
-            binding.textResponse.text = it.answer
+        viewModel.responseText.observe(viewLifecycleOwner) {
+            binding.textResponse.text = it
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {

@@ -42,7 +42,7 @@
                     android:id="@+id/text_response"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBodyMedium" />
+                    android:textAppearance="?attr/textAppearanceBodyLarge" />
 
                 <TextView
                     android:id="@+id/text_error"
@@ -65,36 +65,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/scroll_response">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_query"
-                style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+            <EditText
+                android:id="@+id/input_query"
+                android:background="@drawable/search_edittext_background"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
                 android:hint="Query"
+                android:drawablePadding="8dp"
+                android:textColorHint="#808080"
+                android:textAppearance="@style/TextAppearance.Material3.SearchBar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_submit_query"
-                app:layout_constraintWidth_default="spread">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_query"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textAutoCorrect|textAutoComplete"
-                    style="@style/TextAppearance.Material3.SearchBar"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintWidth_default="spread"/>
 
             <Button
                 android:id="@+id/button_submit_query"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="↑"
-                app:layout_constraintBottom_toBottomOf="@+id/layout_query"
+                app:layout_constraintBottom_toBottomOf="@+id/input_query"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/layout_query"
-                app:layout_constraintTop_toTopOf="@+id/layout_query" />
+                app:layout_constraintStart_toEndOf="@+id/input_query"
+                app:layout_constraintTop_toTopOf="@+id/input_query" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

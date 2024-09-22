@@ -4,6 +4,7 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.tavilyplayground.entity.ApiQuery
 import com.example.tavilyplayground.entity.ApiResponse
@@ -18,6 +19,14 @@ class HomeViewModel @Inject constructor(val repository: MainRepository): ViewMod
     val response: LiveData<ApiResponse>
         get() = _response
     private val _response = MutableLiveData<ApiResponse>()
+    val responseText: LiveData<String> = _response.map { response ->
+        buildString {
+            append("answer: \n${response.answer}\n\n")
+            response.results.map {
+                append("result: \n${it.content}\n\n")
+            }
+        }
+    }
 
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String>
