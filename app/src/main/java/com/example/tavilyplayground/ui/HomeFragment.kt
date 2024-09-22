@@ -39,7 +39,8 @@ class HomeFragment : Fragment() {
 
         binding.buttonSubmitQuery.setOnClickListener {
             binding.textError.text = ""
-            viewModel.submitQuery()
+            viewModel.submitQuery(binding.inputQuery.text.toString())
+            binding.inputQuery.setText("")
             hideKeyboard()
         }
 

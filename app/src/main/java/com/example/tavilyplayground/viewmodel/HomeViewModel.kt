@@ -1,6 +1,6 @@
 package com.example.tavilyplayground.viewmodel
 
-import android.util.Log
+import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,11 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.tavilyplayground.entity.ApiQuery
 import com.example.tavilyplayground.entity.ApiResponse
 import com.example.tavilyplayground.repository.MainRepository
-import com.example.tavilyplayground.ui.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,8 +22,6 @@ class HomeViewModel @Inject constructor(val repository: MainRepository): ViewMod
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String>
         get() = _errorMessage
-
-    val queryText = MutableLiveData<String?>()
 
     private val _queryState = MutableLiveData<QueryState>()
     val queryState: LiveData<QueryState>
@@ -45,12 +40,13 @@ class HomeViewModel @Inject constructor(val repository: MainRepository): ViewMod
         }
     }
 
-    fun submitQuery() {
-        queryText.value?.let {
-            val queryObject = ApiQuery(query = it)
-            searchJson(queryObject)
+    fun submitQuery(queryInput: String) {
+        if(queryInput.isNullOrEmpty()) {
+            return
         }
-        queryText.value = null
+
+        val queryObject = ApiQuery(query = queryInput)
+        searchJson(queryObject)
     }
 }
 
