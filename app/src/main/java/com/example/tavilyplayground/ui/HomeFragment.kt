@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tavilyplayground.R
 import com.example.tavilyplayground.databinding.FragmentHomeBinding
 import com.example.tavilyplayground.viewmodel.HomeViewModel
@@ -29,8 +31,25 @@ class HomeFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.responseText.observe(viewLifecycleOwner) {
-            binding.textResponse.text = it
+        val adapter = HomeAdapter()
+        binding.recyclerResponse.adapter = adapter
+
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+
+        binding.recyclerResponse.layoutManager = layoutManager
+
+        // スクロール時にレイアウトを再調整
+        binding.recyclerResponse.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                layoutManager.invalidateSpanAssignments()
+            }
+        })
+
+        viewModel.response.observe(viewLifecycleOwner) {
+            binding.textAnswer.text = it.answer
+            adapter.submitList(it.images)
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
@@ -38,18 +57,17 @@ class HomeFragment : Fragment() {
         }
 
         binding.buttonSubmitQuery.setOnClickListener {
-            binding.textError.text = ""
-            viewModel.submitQuery(binding.inputQuery.text.toString())
+            val queryText = binding.inputQuery.text.toString()
+            viewModel.submitQuery(queryText)
             binding.inputQuery.setText("")
             hideKeyboard()
         }
 
         viewModel.queryState.observe(viewLifecycleOwner) {
             if(it == QueryState.LOADING) {
-                binding.textStatusQuery.text = it.text
-                binding.textResponse.text = ""
+                binding.progressBar.visibility = View.VISIBLE
             } else {
-                binding.textStatusQuery.text = ""
+                binding.progressBar.visibility = View.GONE
             }
         }
 
