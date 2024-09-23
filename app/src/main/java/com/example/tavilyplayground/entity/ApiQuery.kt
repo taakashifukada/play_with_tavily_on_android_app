@@ -15,7 +15,25 @@ data class ApiQuery(
     @Json(name = "include_answer")
     val includeAnswer: Boolean = true,
     @Json(name = "include_domains")
-    val includeDomains: List<String> = emptyList(),
+    val includeDomains: List<String> = listOf(
+        "https://www.rakuten.co.jp/",
+        "https://www.amazon.co.jp/",
+        "https://brandavenue.rakuten.co.jp/",
+        "https://zozo.jp/",
+        "https://www.uniqlo.com/",
+        "https://store.united-arrows.co.jp/",
+        "https://www.gu-global.com/jp/ja/",
+        "https://www.buyma.com/",
+        "https://www.farfetch.com/",
+        "https://www.net-a-porter.com/",
+        "https://www.fashionsnap.com/",
+        "https://www.vogue.co.jp/",
+        "https://store.nanouniverse.jp/",
+        "https://www.balenciaga.com/",
+        "https://www.fashion-press.net/",
+        "https://www.nike.com/jp/",
+        "https://www.adidas.jp/",
+    ),
     @Json(name = "include_image_descriptions")
     val includeImageDescriptions: Boolean = true,
     @Json(name = "include_images")
@@ -23,7 +41,7 @@ data class ApiQuery(
     @Json(name = "include_raw_content")
     val includeRawContent: Boolean = false,
     @Json(name = "max_results")
-    val maxResults: Int = 5,
+    val maxResults: Int = 50,
     @Json(name = "search_depth")
     val searchDepth: String = SearchDepth.ADVANCED.value,
     @Json(name = "days")

@@ -93,4 +93,7 @@ dependencies {
 
     // fragment
     implementation("androidx.fragment:fragment-ktx:1.8.3")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }
